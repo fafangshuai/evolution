@@ -11,7 +11,7 @@ import ffs.tenacity.FList;
  */
 public class RPN {
 
-  public double calc(String expr) {
+  public static double calc(String expr) {
     FList infixList = convertFromStr(expr);
     FList suffixList = infixToSuffixExpr(infixList);
     System.out.printf("中缀表达式: %s\n", format(infixList));
@@ -19,7 +19,7 @@ public class RPN {
     return calc(suffixList);
   }
 
-  private String format(FList list) {
+  private static String format(FList list) {
     StringBuilder sb = new StringBuilder();
     FIterator itr = list.iterator();
     while (itr.hasNext()) {
@@ -34,7 +34,7 @@ public class RPN {
    * @param s 算式
    * @return 列表
    */
-  private FList convertFromStr(String s) {
+  private static FList convertFromStr(String s) {
     FList expr = new FDoubleLinkedList();
     char[] a = s.toCharArray();
     int anchor = 0;
@@ -58,7 +58,7 @@ public class RPN {
    * @param c 输入字符
    * @return bool
    */
-  private boolean isOperand(String c) {
+  private static boolean isOperand(String c) {
     switch (c) {
       case "+":
       case "-":
@@ -84,7 +84,7 @@ public class RPN {
    * @param infixExpr 中缀表达式列表
    * @return 后缀表达式列表
    */
-  private FList infixToSuffixExpr(FList infixExpr) {
+  private static FList infixToSuffixExpr(FList infixExpr) {
     FList suffixExpr = new FDoubleLinkedList();
     FIterator itr = infixExpr.iterator();
     FLinkedStack stack = new FLinkedStack();
@@ -124,14 +124,14 @@ public class RPN {
    * 计算后缀表达式
    * 1. 输入后缀表达式
    * 2. 遍历后缀表达式
-   *    - 遇到的操作数直接入栈
-   *    - 遇到操作符，取出栈顶的两个元素进行运算，运算结果入栈
+   * - 遇到的操作数直接入栈
+   * - 遇到操作符，取出栈顶的两个元素进行运算，运算结果入栈
    * 3. 输出栈顶元素，即结果
    *
    * @param expr 后缀表达式
    * @return 结果
    */
-  private double calc(FList expr) {
+  private static double calc(FList expr) {
     FIterator itr = expr.iterator();
     FLinkedStack stack = new FLinkedStack();
     while (itr.hasNext()) {
@@ -152,8 +152,7 @@ public class RPN {
 
   public static void main(String[] args) {
     String s = "9+(3-1*5)*(3+10)/2";
-    RPN rpn = new RPN();
-    System.out.println(rpn.calc(s));
+    System.out.println(calc(s));
   }
 
   /**
@@ -246,7 +245,7 @@ public class RPN {
       oprs = new Opr[]{addOpr, subOpr, mulOpr, divOpr};
     }
 
-    public static Opr getOpr(String id) {
+    static Opr getOpr(String id) {
       for (Opr opr : oprs) {
         if (opr.id().equals(id)) {
           return opr;
